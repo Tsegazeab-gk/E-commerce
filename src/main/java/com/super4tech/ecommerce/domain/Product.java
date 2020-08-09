@@ -1,4 +1,109 @@
 package com.super4tech.ecommerce.domain;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
+@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    private String name;
+
+    private boolean availableInStore;
+
+    private String description;
+
+    private double price;
+
+    private boolean isAvailable;
+
+    private String productNumber;
+
+    private String productCategory;
+
+    private int sellerId;
+
+
+
+    @ManyToOne
+    @JoinTable(
+            name = "product_seller",
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "seller_id")}
+    )
+    private User seller;
+
+    private Integer stock;
+
+    /**
+     * Once Product is in use, it no longer be deleted
+     */
+    private boolean isInUse;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Review> reviews = new ArrayList<>();
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date createdDate;
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date updatedDate;
+
+    public boolean canDelete() {
+        return !isInUse;
+    }
+
+    public void addReview(Review review) {
+        review.setProduct(this);
+        this.reviews.add(review);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(seller, product.seller);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, seller);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                ", isInUse=" + isInUse +
+                ", reviews=" + reviews +
+                '}';
+    }
 }

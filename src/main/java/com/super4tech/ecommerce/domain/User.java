@@ -2,22 +2,33 @@ package com.super4tech.ecommerce.domain;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
     public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Column
     boolean active;
+
+    @Column
     String password;
+
+    @Column
     String username;
 
 
-    @OneToOne
+    @OneToOne (mappedBy = "user", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Customer customer;
 
-    @OneToOne
+    @OneToOne(mappedBy = "user",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private  Supplier supplier;
+
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinColumn(name = "User_Id")
+    private List<Review> reviews;
 
     public User() {
     }
@@ -68,5 +79,18 @@ import javax.persistence.*;
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", active=" + active +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", customer=" + customer +
+                ", supplier=" + supplier +
+                ", reviews=" + reviews +
+                '}';
     }
 }

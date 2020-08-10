@@ -11,7 +11,8 @@ import java.util.List;
 public class ShoppingCart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Cart_Id")
     private Long id = null;
 
     @Enumerated(EnumType.STRING)
@@ -22,12 +23,15 @@ public class ShoppingCart {
 
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "Cart_Id")
     private List<CartItem> cartItems;
 
-    @OneToOne
-    private Order order;
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+     private ZOrder order;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Customer_Id")
+private  Customer customer;
 
 
     public ShoppingCart() {

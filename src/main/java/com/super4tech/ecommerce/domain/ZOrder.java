@@ -4,43 +4,44 @@ import com.super4tech.ecommerce.enums.OrderStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-import javax.xml.crypto.Data;
 import java.util.Date;
 
 @Entity
-public class Order {
+ @Table(name = "Orders")
+public class ZOrder {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = null;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Column(name = "Order_Id")
+    private Long id;
 
-    @Column(name = "order_number")
+    @Column(name = "Order_Number")
     private String orderNumber;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "ordered_date")
+    @Column(name = "Ordered_Date")
     private Date orderedDate;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "shipped_date")
-    private Date  shippedDate;
+    @Column(name = "Ship_Date")
+    private Date  shipDate;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+   // @Transient
+   // @Enumerated(EnumType.STRING)
+   // private OrderStatus status;
 
-    @OneToOne
-     private OrderPayment payment;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+     @JoinColumn(name = "Cart_Id")
+    private ShoppingCart shoppingCart;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Payment_Id")
+     private Payment payment;
 
 
-    public Order() {
+    public ZOrder() {
     }
 
-    public Order(String orderNumber, Date orderedDate, Date shippedDate, OrderStatus status) {
-        this.orderNumber = orderNumber;
-        this.orderedDate = orderedDate;
-        this.shippedDate = shippedDate;
-        this.status = status;
-    }
 
     public Long getId() {
         return id;
@@ -66,29 +67,31 @@ public class Order {
         this.orderedDate = orderedDate;
     }
 
-    public Date getShippedDate() {
-        return shippedDate;
+    public Date getShipDate() {
+        return shipDate;
     }
 
-    public void setShippedDate(Date shippedDate) {
-        this.shippedDate = shippedDate;
+    public void setShipDate(Date shipDate) {
+        this.shipDate = shipDate;
     }
 
-    public OrderStatus getStatus() {
-        return status;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
-    public OrderPayment getPayment() {
+    public Payment getPayment() {
         return payment;
     }
 
-    public void setPayment(OrderPayment payment) {
+    public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
+
 
     @Override
     public String toString() {
@@ -96,8 +99,8 @@ public class Order {
                 "id=" + id +
                 ", orderNumber='" + orderNumber + '\'' +
                 ", orderedDate=" + orderedDate +
-                ", shippedDate=" + shippedDate +
-                ", status=" + status +
+
+
                 ", payment=" + payment +
                 '}';
     }

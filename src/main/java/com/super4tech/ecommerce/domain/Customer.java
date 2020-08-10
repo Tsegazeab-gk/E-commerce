@@ -5,10 +5,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
     @Column(name = "first_name", nullable = false)
@@ -22,14 +23,21 @@ public class Customer {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private User user;
 
-    @OneToOne
+
+    @OneToOne(mappedBy = "customer",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
 
 
-    @OneToMany()
-    @JoinColumn
+    @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @JoinColumn(name = "Customer_Id")
     private List<Address> addresses;
+
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Review> reviews;
 
     public Customer() {
     }

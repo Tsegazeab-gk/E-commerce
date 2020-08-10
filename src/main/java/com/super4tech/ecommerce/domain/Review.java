@@ -9,23 +9,36 @@ import java.util.Date;
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
+    @Column
     private String title;
 
+    @Column
     private int rating;
 
+    @Column
     private String pros;
+
+    @Column
     private String cons;
 
+    @Column
     private String comment;
 
+    @Column
     private String reviewBy;
 
 
     @Temporal(TemporalType.DATE)
     private Date reviewDate;
+
+
+    @ManyToOne
+    @JoinColumn(name="Customer_Id")
+    private Customer customer ;
+
 
     public Review() {
     }

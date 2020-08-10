@@ -8,7 +8,7 @@ import java.util.List;
 public class Supplier {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
     @Column(name = "first_name", nullable = false)
@@ -22,14 +22,19 @@ public class Supplier {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private User user;
+
 
     @OneToMany(mappedBy = "supplier")
    private List<Product> products;
 
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "Supplier_Id")
     private List<Address> addresses;
+
+
 
     public Supplier() {
     }

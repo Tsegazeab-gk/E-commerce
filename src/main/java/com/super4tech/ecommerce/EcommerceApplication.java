@@ -32,7 +32,7 @@ public class EcommerceApplication {
         Customer customer=new Customer("tt","jj","");
 //
 //        CustomerService service=new CustomerServiceImpl();
-        customerService.save(customer);
+      //  customerService.save(customer);
 
     }
 

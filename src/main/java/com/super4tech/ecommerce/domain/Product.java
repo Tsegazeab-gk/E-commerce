@@ -7,7 +7,7 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
     @Column(name = "product_number")
@@ -39,9 +39,11 @@ private List<CartItem> cartItems;
    private  Supplier supplier;
 
     @OneToMany
-    @JoinColumn
-    private  List<Review> reviews;
+    @JoinColumn(name = "Product_Id")
+    private List<Review> reviews;
 
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private Category category;
 
     public Product() {
     }
@@ -133,5 +135,30 @@ private List<CartItem> cartItems;
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productNumber='" + productNumber + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", isAvailable=" + isAvailable +
+                ", availableInStore=" + availableInStore +
+                ", cartItems=" + cartItems +
+                ", supplier=" + supplier +
+                ", reviews=" + reviews +
+                ", category=" + category +
+                '}';
     }
 }

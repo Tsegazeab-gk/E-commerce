@@ -6,10 +6,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Payment")
-public class OrderPayment {
+public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Payment_Id")
     private Long id = null;
 
 
@@ -37,17 +38,20 @@ public class OrderPayment {
 
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "Shipping_Adress_Id")
 private  Address shippingAddress;
 
 @ManyToOne
-@JoinColumn
+@JoinColumn(name = "Billing_Adress_Id")
 private  Address billingAddress;
 
-    public OrderPayment() {
+@OneToOne(mappedBy = "payment")
+private ZOrder order;
+
+    public Payment() {
     }
 
-    public OrderPayment(int cvv, String cardName, String cardNumber, String cardType, Date expiredMonth, Date expiredYear, double amount) {
+    public Payment(int cvv, String cardName, String cardNumber, String cardType, Date expiredMonth, Date expiredYear, double amount) {
         Cvv = cvv;
         this.cardName = cardName;
         this.cardNumber = cardNumber;

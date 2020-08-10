@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layouts/main}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Home Page</title>
+  <link th:href="@{/css/index.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<th:block layout:fragment="page-custom-js">
+  <script type="text/javascript" th:src="@{/js/buyer/cart.js}"></script>
+</th:block>
+
+<div layout:fragment="main-content">
+  <div id="product-container">
+    <div class="d-flex flex-row flex-wrap mt-5 mb-5">
+      <div th:each="prod : ${products}" class="col-md-4 col-lg-4 pt-2 pb-2">
+        <div class="card shadow">
+          <img th:src="${prod.image}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <div class="d-flex justify-content-center">
+              <span class="badge badge-light text-danger p-2 price-text" th:text="'$' + ${prod.price}"></span>
+            </div>
+            <div class="d-flex justify-content-center">
+              <a th:href="@{/product/{id}(id=${prod.id})}" class="text-decoration-none">
+                <h5 class="card-title" th:text="${prod.name}"></h5>
+              </a>
+            </div>
+            <div class="d-flex justify-content-center" th:if="${user_name == null || user_role == 'BUYER'}">
+              <a href="#" th:data-name="${prod.name}" th:data-id="${prod.id}"
+                 class="btn btn-success order-btn shadow"><i
+                  class="fa fa-shopping-cart mr-1"></i>Add to Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

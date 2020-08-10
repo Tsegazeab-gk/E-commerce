@@ -14,8 +14,5 @@ public interface GenericDao<T> {
     
     List<T> findAll();
 
-	public List<T> findAll(String s,Object  hint );
-
-    
     
 }

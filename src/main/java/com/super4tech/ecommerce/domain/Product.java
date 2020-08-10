@@ -1,109 +1,164 @@
 package com.super4tech.ecommerce.domain;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-@Setter
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id = null;
 
-    private String name;
-
-    private boolean availableInStore;
-
-    private String description;
-
-    private double price;
-
-    private boolean isAvailable;
-
+    @Column(name = "product_number")
     private String productNumber;
 
-    private String productCategory;
 
-    private int sellerId;
+    @Column
+    private String name;
+
+    @Column
+    private String description;
+
+    @Column
+    private double price;
+
+    @Column
+    private boolean isAvailable;
 
 
+    @Column
+    private boolean availableInStore;
 
-    @ManyToOne
-    @JoinTable(
-            name = "product_seller",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "seller_id")}
-    )
-    private User seller;
 
-    private Integer stock;
+    @OneToMany
+    @JoinColumn
+private List<CartItem> cartItems;
 
-    /**
-     * Once Product is in use, it no longer be deleted
-     */
-    private boolean isInUse;
+    @ManyToOne()
+   private  Supplier supplier;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<Review> reviews = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "Product_Id")
+    private List<Review> reviews;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    private Date createdDate;
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private Category category;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date updatedDate;
-
-    public boolean canDelete() {
-        return !isInUse;
+    public Product() {
     }
 
-    public void addReview(Review review) {
-        review.setProduct(this);
-        this.reviews.add(review);
+    public Product(String productNumber, String name, String description, double price, boolean isAvailable, boolean availableInStore) {
+        this.productNumber = productNumber;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.isAvailable = isAvailable;
+        this.availableInStore = availableInStore;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id == product.id &&
-                Objects.equals(name, product.name) &&
-                Objects.equals(description, product.description) &&
-                Objects.equals(seller, product.seller);
+    public Long getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, seller);
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProductNumber() {
+        return productNumber;
+    }
+
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public boolean isAvailableInStore() {
+        return availableInStore;
+    }
+
+    public void setAvailableInStore(boolean availableInStore) {
+        this.availableInStore = availableInStore;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
+                ", productNumber='" + productNumber + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", stock=" + stock +
-                ", isInUse=" + isInUse +
+                ", isAvailable=" + isAvailable +
+                ", availableInStore=" + availableInStore +
+                ", cartItems=" + cartItems +
+                ", supplier=" + supplier +
                 ", reviews=" + reviews +
+                ", category=" + category +
                 '}';
     }
 }

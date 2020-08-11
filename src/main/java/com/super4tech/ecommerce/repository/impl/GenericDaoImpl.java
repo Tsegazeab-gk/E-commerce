@@ -30,7 +30,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
      }
 
 	@Override
-	public void delete(Long id) {
+	public void deleteById(Long id) {
         T entity = findOne( id );
         delete( entity );  
     }

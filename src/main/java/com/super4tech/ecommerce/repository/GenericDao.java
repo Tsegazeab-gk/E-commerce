@@ -6,7 +6,7 @@ public interface GenericDao<T> {
 
     void save(T t);
 
-    void delete(Long id);
+    void deleteById(Long id);
 
     T findOne(Long id);
 

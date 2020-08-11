@@ -1,18 +1,21 @@
 package com.super4tech.ecommerce.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
 
+    @Size(min = 4, max = 20, message = "{Size.validation}")
     @Column(name = "product_number")
     private String productNumber;
-
 
     @Column
     private String name;
@@ -24,18 +27,20 @@ public class Product {
     private double price;
 
     @Column
-    private boolean isAvailable;
-
+    private boolean isAvailable = true;
 
     @Column
     private boolean availableInStore;
 
 
+    @Transient
+    private MultipartFile productImage;
+
     @OneToMany
     @JoinColumn
 private List<CartItem> cartItems;
 
-    @ManyToOne()
+    @ManyToOne
    private  Supplier supplier;
 
     @OneToMany
@@ -43,18 +48,20 @@ private List<CartItem> cartItems;
     private List<Review> reviews;
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @JoinColumn(name = "category")
     private Category category;
 
     public Product() {
     }
 
-    public Product(String productNumber, String name, String description, double price, boolean isAvailable, boolean availableInStore) {
+    public Product( String productNumber, String name, String description,
+                    double price, boolean availableInStore, MultipartFile productImage) {
         this.productNumber = productNumber;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.isAvailable = isAvailable;
         this.availableInStore = availableInStore;
+        this.productImage = productImage;
     }
 
     public Long getId() {
@@ -145,6 +152,14 @@ private List<CartItem> cartItems;
         this.category = category;
     }
 
+    public MultipartFile getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(MultipartFile productImage) {
+        this.productImage = productImage;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -153,8 +168,8 @@ private List<CartItem> cartItems;
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", isAvailable=" + isAvailable +
                 ", availableInStore=" + availableInStore +
+                ", productImage=" + productImage +
                 ", cartItems=" + cartItems +
                 ", supplier=" + supplier +
                 ", reviews=" + reviews +

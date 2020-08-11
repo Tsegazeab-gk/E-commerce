@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @RequestMapping("/all-products")
 public class AllProducts {
 
-    @Autowired
+   // @Autowired
     private ProductService productService;
 
     @GetMapping

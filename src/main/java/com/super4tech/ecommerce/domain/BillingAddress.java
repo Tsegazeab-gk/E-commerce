@@ -8,12 +8,16 @@ import org.apache.tomcat.jni.Address;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@DiscriminatorValue("billing")
-@ToString
+
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@DiscriminatorValue("billing")
+//@ToString
 public class BillingAddress extends Address {
+
+    private long id;
+
 }

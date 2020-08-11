@@ -9,11 +9,11 @@ import org.apache.tomcat.jni.Address;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@DiscriminatorValue("shipping")
+//@Entity
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@DiscriminatorValue("shipping")
 @ToString
 public class ShippingAddress extends Address {
 }

@@ -1,6 +1,8 @@
 package com.super4tech.ecommerce.domain;
 
 
+import com.super4tech.ecommerce.enums.ReviewStatus;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
@@ -19,38 +21,33 @@ public class Review {
     private int rating;
 
     @Column
-    private String pros;
-
-    @Column
-    private String cons;
-
-    @Column
     private String comment;
-
-    @Column
-    private String reviewBy;
 
 
     @Temporal(TemporalType.DATE)
     private Date reviewDate;
 
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private Product product ;
 
     @ManyToOne
     @JoinColumn(name="Customer_Id")
     private Customer customer ;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private ReviewStatus reviewStatus = ReviewStatus.PENDING;
 
     public Review() {
     }
 
-    public Review(String title, int rating, String pros, String cons, String comment, String reviewBy, Date reviewDate) {
+    public Review(String title, int rating, String comment, Date reviewDate, ReviewStatus reviewStatus) {
         this.title = title;
         this.rating = rating;
-        this.pros = pros;
-        this.cons = cons;
         this.comment = comment;
-        this.reviewBy = reviewBy;
         this.reviewDate = reviewDate;
+        this.reviewStatus = reviewStatus;
     }
 
     public Long getId() {
@@ -77,36 +74,12 @@ public class Review {
         this.rating = rating;
     }
 
-    public String getPros() {
-        return pros;
-    }
-
-    public void setPros(String pros) {
-        this.pros = pros;
-    }
-
-    public String getCons() {
-        return cons;
-    }
-
-    public void setCons(String cons) {
-        this.cons = cons;
-    }
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public String getReviewBy() {
-        return reviewBy;
-    }
-
-    public void setReviewBy(String reviewBy) {
-        this.reviewBy = reviewBy;
     }
 
     public Date getReviewDate() {
@@ -117,17 +90,41 @@ public class Review {
         this.reviewDate = reviewDate;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public ReviewStatus getReviewStatus() {
+        return reviewStatus;
+    }
+
+    public void setReviewStatus(ReviewStatus reviewStatus) {
+        this.reviewStatus = reviewStatus;
+    }
+
     @Override
     public String toString() {
         return "Review{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", rating=" + rating +
-                ", pros='" + pros + '\'' +
-                ", cons='" + cons + '\'' +
                 ", comment='" + comment + '\'' +
-                ", reviewBy='" + reviewBy + '\'' +
                 ", reviewDate=" + reviewDate +
+                ", product=" + product +
+                ", customer=" + customer +
+                ", reviewStatus=" + reviewStatus +
                 '}';
     }
 }

@@ -17,6 +17,16 @@ public class CartItem {
     @Column
      private double price;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Cart_Id")
+    private ShoppingCart shoppingCart;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="product_id")
+    private Product product;
+
+
     public CartItem() {
     }
 
@@ -42,6 +52,14 @@ public class CartItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     @Override

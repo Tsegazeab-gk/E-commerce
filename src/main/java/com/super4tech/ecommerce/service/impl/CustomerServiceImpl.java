@@ -1,7 +1,7 @@
 package com.super4tech.ecommerce.service.impl;
 
 import com.super4tech.ecommerce.domain.Customer;
-import com.super4tech.ecommerce.repository.CustomerDao;
+import com.super4tech.ecommerce.repository.CustomerRepository;
 import com.super4tech.ecommerce.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private CustomerDao customerDao;
+    private CustomerRepository customerDao;
 
 
     @Override
@@ -34,6 +34,6 @@ customerDao.save(customer);
 
     @Override
     public Customer findOne(Long id) {
-        return customerDao.findOne(id);
+        return customerDao.findById(id);
     }
 }

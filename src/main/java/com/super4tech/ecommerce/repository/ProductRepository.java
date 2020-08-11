@@ -11,7 +11,7 @@ public interface ProductRepository  extends GenericDao<Product> {
 
     public List<Product> findAll();
 
-    public Product findOne(Long id);
+    public Product findById(Long id);
     public List<Product> findByCategory(Category category );
 
     public Product update(Product product);

@@ -22,13 +22,12 @@ public class ShoppingCart {
     private double totalPrice;
 
 
-    @OneToMany
-    @JoinColumn(name = "Cart_Id")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "shoppingCart")
     private List<CartItem> cartItems;
-
+/*
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
      private ZOrder order;
-
+*/
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Customer_Id")
 private  Customer customer;

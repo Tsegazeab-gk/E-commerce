@@ -36,7 +36,7 @@ public class Customer {
     private List<Address> addresses;
 
 
-    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Review> reviews;
 
     public Customer() {

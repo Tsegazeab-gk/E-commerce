@@ -31,12 +31,12 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@Override
 	public void deleteById(Long id) {
-        T entity = findOne( id );
+        T entity = findById( id );
         delete( entity );  
     }
 
 	@Override
-	public T findOne( Long id ){
+	public T findById( Long id ){
 	    return (T) entityManager.find( daoType, id );
 	 }
 	

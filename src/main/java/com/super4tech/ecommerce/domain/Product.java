@@ -35,11 +35,11 @@ public class Product {
 
     @Transient
     private MultipartFile productImage;
-
+/*
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "Product_Id")
 private List<CartItem> cartItems;
-
+*/
     @ManyToOne
    private  Supplier supplier;
 
@@ -119,7 +119,7 @@ private List<CartItem> cartItems;
     public void setAvailableInStore(boolean availableInStore) {
         this.availableInStore = availableInStore;
     }
-
+/*
     public List<CartItem> getCartItems() {
         return cartItems;
     }
@@ -127,7 +127,7 @@ private List<CartItem> cartItems;
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
-
+*/
     public Supplier getSupplier() {
         return supplier;
     }
@@ -170,7 +170,7 @@ private List<CartItem> cartItems;
                 ", price=" + price +
                 ", availableInStore=" + availableInStore +
                 ", productImage=" + productImage +
-                ", cartItems=" + cartItems +
+
                 ", supplier=" + supplier +
                 ", reviews=" + reviews +
                 ", category=" + category +

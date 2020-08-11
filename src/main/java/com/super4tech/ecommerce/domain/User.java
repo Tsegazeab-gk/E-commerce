@@ -25,11 +25,11 @@ import java.util.List;
 
     @OneToOne(mappedBy = "user",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private  Supplier supplier;
-
+/*
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "User_Id")
     private List<Review> reviews;
-
+*/
     public User() {
     }
 
@@ -90,7 +90,7 @@ import java.util.List;
                 ", username='" + username + '\'' +
                 ", customer=" + customer +
                 ", supplier=" + supplier +
-                ", reviews=" + reviews +
+               // ", reviews=" + reviews +
                 '}';
     }
 }

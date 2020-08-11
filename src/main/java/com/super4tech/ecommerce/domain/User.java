@@ -2,22 +2,23 @@ package com.super4tech.ecommerce.domain;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
     public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Long id;
-
-    @Column
-    boolean active;
-
-    @Column
-    String password;
-
-    @Column
+    @Column(nullable = false, unique = true)
     String username;
+    @Column(nullable = false)
+    String password;
+    Boolean active;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="credentials_id")
+    List<Role> roles = new ArrayList<Role>();
+
 
 
     @OneToOne (mappedBy = "user", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
@@ -79,6 +80,14 @@ import java.util.List;
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

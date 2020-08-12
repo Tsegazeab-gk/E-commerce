@@ -1,8 +1,11 @@
 package com.super4tech.ecommerce.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.super4tech.ecommerce.enums.OrderStatus;
 import com.super4tech.ecommerce.helper.Constants;
+import com.super4tech.ecommerce.messaging.OrderRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +23,8 @@ import java.util.Set;
 @Getter
 @ToString
 @Entity(name = "Orders")
-public class Order implements Serializable {
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = OrderRequest.class)
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -1,6 +1,7 @@
 package com.super4tech.ecommerce.service.impl;
 
 
+import com.super4tech.ecommerce.aop.annotation.OrderNotification;
 import com.super4tech.ecommerce.domain.Notification;
 import com.super4tech.ecommerce.domain.Order;
 import com.super4tech.ecommerce.enums.OrderStatus;
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderHistoryServiceImpl orderHistoryService;
 
+    @OrderNotification  // this annotation is used t call aspect to send an email after save
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Order addOrder(Order order) {

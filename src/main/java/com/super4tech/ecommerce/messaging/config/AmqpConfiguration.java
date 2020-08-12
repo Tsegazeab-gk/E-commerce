@@ -12,6 +12,8 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -27,37 +29,40 @@ public class AmqpConfiguration {
 	    	CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
 	    	connectionFactory.setUsername("guest");
 	    	connectionFactory.setPassword("guest");
-	    	connectionFactory.setCacheMode(CachingConnectionFactory.CacheMode.CONNECTION);
+	    	//connectionFactory.setCacheMode(CachingConnectionFactory.CacheMode.CONNECTION);
 	        return connectionFactory;
 	    }
-
 	@Bean
 	public AmqpAdmin amqpAdmin() {
 		return new RabbitAdmin(connectionFactory());
 	}
 	@Bean
-	public List<Declarable> orderDirectExchangeBindings() {
-		Queue orderStoreQueue = new Queue("orderStoreQueue", true);
-		Queue orderOnlineQueue = new Queue("orderOnlineQueue", true);
-		DirectExchange orderDirectExchange = new DirectExchange("orderDirectExchange");
+	Queue purchasesOnlineQueue() {
+		return new Queue("emailOrderQueue", true);
+	}
+	@Bean
+	public Queue purchasesOnlineClassicQueue() {
+		return new Queue("purchasesOnlineClassic");
+	}
+	@Bean
+	TopicExchange orderExchange() {
+		return new TopicExchange("orderExchange");
+	}
+	@Bean
+	List<Binding> bindings() {
 
-		List<Declarable> bindingList = Arrays.<Declarable>asList(
-				orderStoreQueue,
-				orderOnlineQueue,
-				orderDirectExchange,
-				BindingBuilder.bind(orderStoreQueue).to(orderDirectExchange).with("order.store"),
-				BindingBuilder.bind(orderOnlineQueue).to(orderDirectExchange).with("order.online"));
-
-		return bindingList;
+		return Arrays.asList(BindingBuilder.bind(purchasesOnlineQueue()).to(orderExchange()).with("purchases.online.#"),
+				BindingBuilder.bind(purchasesOnlineClassicQueue()).to(orderExchange()).with("purchases.online.classic.#")
+		);
 	}
 
-
 	@Bean
-	public RabbitTemplate orderOnlineTemplate() {
-		RabbitTemplate orderOnlineTemplate= new RabbitTemplate(connectionFactory());
-		orderOnlineTemplate.setRoutingKey("mail.order");
-		orderOnlineTemplate.setExchange("orderDirectExchange");
-		orderOnlineTemplate.setReplyTimeout(2000);
+	public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+		RabbitTemplate orderOnlineTemplate= new RabbitTemplate(connectionFactory);
+	orderOnlineTemplate.setRoutingKey("purchases.online");
+		orderOnlineTemplate.setExchange("orderExchange");
+		 orderOnlineTemplate.setMessageConverter(jsonMessageConverter());
+		 orderOnlineTemplate.setReplyTimeout(2000);
 		return orderOnlineTemplate;
 	}
 
@@ -66,4 +71,9 @@ public class AmqpConfiguration {
 	    	return new OrderEmailServiceImpl();
 	}
 
+
+	@Bean
+	public MessageConverter jsonMessageConverter() {
+		return new Jackson2JsonMessageConverter();
+	}
 }

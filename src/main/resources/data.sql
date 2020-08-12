@@ -6,10 +6,10 @@ INSERT INTO Role VALUES (3, 'SELLER');
 -- $2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6
 
 INSERT INTO User (user_id, active, password, username)
-VALUES (30, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'buyer@gmail.com');
+VALUES (30, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'tsegidey@gmail.com');
 INSERT INTO user_role (user_id, role_id) VALUES(30,2);
-INSERT INTO buyer (coupons, email, first_name, last_name, user_id, id)
-VALUES(0,'buyer@gmail.com','Tsegazeab','Gudey',30,30);
+INSERT INTO buyer ( email, first_name, last_name, user_id, id)
+VALUES('tsegidey@gmail.com','Tsegazeab','Gudey',30,30);
 
 
 INSERT INTO User (user_id, active, password, username)VALUES

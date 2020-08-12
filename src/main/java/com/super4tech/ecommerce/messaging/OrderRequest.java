@@ -1,8 +1,12 @@
 package com.super4tech.ecommerce.messaging;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.io.Serializable;
 
-public class OrderRequest implements Serializable {
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = OrderRequest.class)
+public class OrderRequest  {
 
     private Long id = null;
 
@@ -31,5 +35,13 @@ public class OrderRequest implements Serializable {
 
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderRequest{" +
+                "id=" + id +
+                ", orderNumber='" + orderNumber + '\'' +
+                '}';
     }
 }

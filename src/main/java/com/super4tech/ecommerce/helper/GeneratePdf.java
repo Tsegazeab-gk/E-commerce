@@ -33,7 +33,7 @@ public class GeneratePdf {
             tableHeader.setWidths(new int[]{2, 2, 2, 2});
 
             PdfPCell tableHeaderCell;
-            tableHeaderCell = new PdfPCell(new Phrase("Fancy Online Inc.", topHeaderFont));
+            tableHeaderCell = new PdfPCell(new Phrase("Super4Tech Shopping", topHeaderFont));
             tableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             tableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             tableHeaderCell.setColspan(3);
@@ -98,7 +98,7 @@ public class GeneratePdf {
 
                 PdfPCell cell;
 
-                for (Item itm : order.getShoppingCart().getItem()) {
+                for (Item itm : order.getCartItem().getItem()) {
                     BigDecimal price = itm.getProduct().getPrice().multiply(new BigDecimal(itm.getQuantity()));
                     totalPrice = totalPrice.add(price);
 

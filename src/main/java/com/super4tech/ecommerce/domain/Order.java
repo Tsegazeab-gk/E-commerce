@@ -32,7 +32,7 @@ public class Order implements Serializable {
     //private Seller seller;
     @JoinColumn
     @OneToOne(cascade = CascadeType.MERGE)
-    private ShoppingCart shoppingCart;
+    private CartItem cartItem;
     // @Transient
     // private Product product;
     //private Integer quantity;
@@ -70,12 +70,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
+    public CartItem getCartItem() {
+        return cartItem;
     }
 
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
+    public void setCartItem(CartItem cartItem) {
+        this.cartItem = cartItem;
     }
 
     public LocalDateTime getOrderDate() {

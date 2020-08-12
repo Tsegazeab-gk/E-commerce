@@ -26,17 +26,17 @@
                             <div class="row">
 
                                 <div class="col-25">
-                                    <div class="container" th:object="${payment.shoppingCart.item}">
+                                    <div class="container" th:object="${payment.cartItem.item}">
                                         <h4>
                                             Cart
                                             <span class="price" style="color:black">
                                                 <i class="fa fa-shopping-cart"></i>
-                                                <b th:text="${payment.shoppingCart.item.size()}">NaN </b>
+                                                <b th:text="${payment.cartItem.item.size()}">NaN </b>
                                             </span>
                                         </h4>
 
-                                        <p th:each="itm : ${payment.shoppingCart.item}">
-                                            <a th:href="@{'/cartItem/viewDetails?productId={id}'(id=${payment.shoppingCart.cartId})}"
+                                        <p th:each="itm : ${payment.cartItem.item}">
+                                            <a th:href="@{'/cartItem/viewDetails?productId={id}'(id=${payment.cartItem.cartId})}"
                                                th:text="${itm.product.title}"></a>
                                             (<span th:text="${itm.quantity}"></span>)
                                             <span class="price" th:text="${itm.product.price*itm.quantity}"></span>
@@ -45,7 +45,7 @@
                                         <hr>
                                         <p>Total
                                             <span class="price" style="color:black">
-                                            <b th:text="${payment.shoppingCart.totalPrice}">$NaN</b>
+                                            <b th:text="${payment.cartItem.totalPrice}">$NaN</b>
                                             </span>
                                         </p>
                                     </div>
@@ -62,7 +62,7 @@
 
                                                     <div class="icon-container">
                                                         <a class="btn btn-sm"
-                                                           th:href="@{'/payment/coupon/{id}'(id=${payment.shoppingCart.cartId})}">
+                                                           th:href="@{'/payment/coupon/{id}'(id=${payment.cartItem.cartId})}">
                                                             Pay with Coupon
                                                         </a>
                                                     </div>
@@ -284,9 +284,9 @@
                                                 Remember Me?
                                             </label>
 
-                                            <input type="hidden" id="shoppingCart.cartId"
+                                            <input type="hidden" id="cartItem.cartId"
                                                    name="cartItem.cartId"
-                                                   th:value="*{shoppingCart.cartId}">
+                                                   th:value="*{cartItem.cartId}">
 
                                             <input type="hidden" id="totalPrice"
                                                    name="totalPrice"

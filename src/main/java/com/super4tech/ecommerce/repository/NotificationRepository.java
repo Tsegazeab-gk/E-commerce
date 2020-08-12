@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface NotificationRepository extends GenericDao<Notification> {
 
-    public List<Notification> getAllUnSeen();
 }

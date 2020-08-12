@@ -1,17 +1,16 @@
 package com.super4tech.ecommerce.controller;
 
+
 import com.super4tech.ecommerce.domain.Buyer;
+import com.super4tech.ecommerce.domain.CartItem;
 import com.super4tech.ecommerce.domain.Item;
-import com.super4tech.ecommerce.domain.ShoppingCart;
-import com.super4tech.ecommerce.enums.ShoppingCartStatus;
-import com.super4tech.ecommerce.service.BuyerService;
+import com.super4tech.ecommerce.enums.CartItemStatus;
 import com.super4tech.ecommerce.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -21,11 +20,11 @@ import java.util.List;
 public class ShoppingCartController {
 
     private BuyerService buyerService;
-    private ShoppingCartService cartItemService;
-    private CartItemService itemService;
+    private CartItemService cartItemService;
+    private ItemService itemService;
 
     @Autowired
-    public ShoppingCartController(ShoppingCartService cartItemService, CartItemService itemService, BuyerService buyerService) {
+    public ShoppingCartController(CartItemService cartItemService, ItemService itemService, BuyerService buyerService) {
         this.itemService = itemService;
         this.cartItemService = cartItemService;
         this.buyerService = buyerService;
@@ -36,10 +35,9 @@ public class ShoppingCartController {
     public String getListInCart(Principal principal, Model model) {
         double total;
         String email = principal.getName();
-
         Buyer buyer = buyerService.findByEmail(email);
 
-        ShoppingCart cartItemBuyer = cartItemService.findByBuyerAndCartStatus(buyer, ShoppingCartStatus.Created);
+        CartItem cartItemBuyer = cartItemService.findByBuyerAndCartStatus(buyer,  CartItemStatus.Created);
         System.out.println("#############"+cartItemBuyer);
         if (cartItemBuyer != null) {
             total = getTotalAmount(cartItemBuyer);
@@ -52,7 +50,7 @@ public class ShoppingCartController {
         return "cart/shoppingCart";
     }
 
-    public double getTotalAmount(ShoppingCart cartItem) {
+    public double getTotalAmount(CartItem cartItem) {
         List<Item> itemsList = cartItem.getItem();
         double sum = 0;
         for (Item item : itemsList) {
@@ -65,7 +63,7 @@ public class ShoppingCartController {
     @GetMapping(value = "/removeItemCart")
     public String removeItemCart(Model model, @RequestParam("itemID") Long itemId) {
         Item item = itemService.findById(itemId);
-        ShoppingCart cartItem = item.getShoppingCart();
+        CartItem cartItem = item.getCartItem();
         cartItemService.deleteItem(item);
         return "redirect:/shoppingCart/cartList";
     }

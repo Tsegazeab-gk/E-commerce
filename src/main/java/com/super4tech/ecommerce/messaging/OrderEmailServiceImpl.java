@@ -11,7 +11,7 @@ public class OrderEmailServiceImpl implements OrderEmailService{
     @Autowired
     RabbitTemplate rabbitTemplate;
     @Override
-    public void publish(Order order) {
+    public void publish(OrderRequest order) {
         rabbitTemplate.convertAndSend("order.create",order);
     }
 }

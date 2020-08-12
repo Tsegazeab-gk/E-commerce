@@ -54,7 +54,7 @@ public class Payment {
 
     @JoinColumn
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private ShoppingCart shoppingCart;
+    private CartItem cartItem;
 
     private Boolean rememberMe;
 }

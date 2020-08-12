@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 @Getter
 @Setter
-
 @Entity
 public class Review {
 
@@ -39,11 +38,7 @@ public class Review {
 	public String toString() {
 		return "Review{" +
 				"id=" + id +
-				", buyer=" + buyer +
-				", product=" + product +
 				", comment='" + comment + '\'' +
-				", reviewStatus=" + reviewStatus +
-				", commentTime=" + commentTime +
 				'}';
 	}
 }

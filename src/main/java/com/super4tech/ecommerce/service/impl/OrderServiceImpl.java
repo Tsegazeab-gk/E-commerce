@@ -111,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
                 orderHistory.setLastUpdatedDate(LocalDateTime.now());
                 orderHistory.setOrderDate(existingOrderEntity.getOrderDate());
                 orderHistory.setOrderStatus(existingOrderEntity.getOrderStatus());
-                orderHistory.setShoppingCart(existingOrderEntity.getShoppingCart());
+                orderHistory.setCartItem(existingOrderEntity.getCartItem());
                 orderHistory.setOrderHistory(existingOrderEntity.getOrderHistory());
                 orderHistory.setPayment(existingOrderEntity.getPayment());
                 orderHistory.getSubordinates().add(existingOrderEntity);

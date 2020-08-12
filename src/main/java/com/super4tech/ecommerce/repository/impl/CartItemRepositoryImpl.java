@@ -1,43 +1,51 @@
 package com.super4tech.ecommerce.repository.impl;
 
-import com.super4tech.ecommerce.domain.Item;
-import com.super4tech.ecommerce.domain.Product;
-import com.super4tech.ecommerce.enums.ItemStatus;
+import com.super4tech.ecommerce.domain.Buyer;
+import com.super4tech.ecommerce.domain.CartItem;
+import com.super4tech.ecommerce.enums.CartItemStatus;
 import com.super4tech.ecommerce.repository.CartItemRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.List;
+
 
 @Repository
-public class CartItemRepositoryImpl  extends GenericDaoImpl<Item> implements CartItemRepository {
+public class CartItemRepositoryImpl extends GenericDaoImpl<CartItem> implements CartItemRepository {
 
     public CartItemRepositoryImpl() {
-        super.setDaoType(Item.class );
+        super.setDaoType(CartItem.class );
     }
 
     @Override
-    public void deleteItemByCart(Long cartId) {
-        Query q=entityManager.createQuery("delete from  Item i where  i.shoppingCart.cartId=:cartId")
-                .setParameter("cartId",cartId);
-        q.executeUpdate();
+    public CartItem findByBuyer(Buyer buyer) {
+
+        Query query=entityManager.createQuery("select s from CartItem  s where s.buyer=:buyer");
+        query.setParameter("buyer",buyer);
+        return (CartItem) query.getSingleResult();
+
 
     }
 
     @Override
-    public List<Product> findAllByItemStatusAndProduct(ItemStatus itemStatus,Product product) {
+    public CartItem findByBuyerAndCartStatus(Buyer buyer, CartItemStatus status) {
+        Query query=entityManager.createQuery("select s from CartItem  s where s.buyer=:buyer AND s.cartItemStatus=:status");
+        query.setParameter("buyer",buyer);
+        query.setParameter("status",status);
 
-        Query query=entityManager.createQuery("select i.product from Item i JOIN  i.product where i.itemStatus= :itemStatus AND i.product=:product");
-        query.setParameter("itemStatus",itemStatus);
-        query.setParameter("product",product);
-        return query.getResultList();
+        CartItem cart=null;
+try {
+    cart = (CartItem) query.getSingleResult();
+}catch (NoResultException e){
+    System.out.println("findByBuyerAndCartStatus----->> cart="+cart);
+}
+
+        return cart;
+
+
     }
 
-    @Override
-    public void setItemStatus(ItemStatus itemStatus, Long cartID) {
-Query query=entityManager.createQuery("update Item  i set i.itemStatus =:itemStatus where  i.shoppingCart.cartId=:cartID");
-query.setParameter("itemStatus",itemStatus);
-query.setParameter("cartID",cartID);
-query.executeUpdate();
-    }
+
+
+
 }

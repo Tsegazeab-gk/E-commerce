@@ -31,7 +31,7 @@ public class OrderAspect {
     public  void sendOrderNotification(JoinPoint jp, Order order){
         System.out.println(jp.getSignature().getName());
         System.out.println(order.toString());
-        orderEmailService.publish(order);
+       // orderEmailService.publish(order);
 
     }
 

@@ -1,6 +1,6 @@
 package com.super4tech.ecommerce.domain;
 
-import com.super4tech.ecommerce.enums.ShoppingCartStatus;
+import com.super4tech.ecommerce.enums.CartItemStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,22 +13,20 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
-public class ShoppingCart {
+public class CartItem {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long cartId;
 
 	@OneToOne
 	private Buyer buyer;
 
-	@OneToMany(cascade  = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "shoppingCart")
+	@OneToMany(cascade  = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "cartItem")
 	private List<Item> item;
 
 	private double totalPrice;
 	@Enumerated(EnumType.STRING)
-	private ShoppingCartStatus cartStatus = ShoppingCartStatus.Created;
-
-
+	private  CartItemStatus cartItemStatus = CartItemStatus.Created;
 
 
 }

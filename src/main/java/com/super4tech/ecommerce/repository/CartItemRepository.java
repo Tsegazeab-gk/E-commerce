@@ -1,17 +1,13 @@
 package com.super4tech.ecommerce.repository;
 
-import com.super4tech.ecommerce.domain.Item;
-import com.super4tech.ecommerce.domain.Product;
-import com.super4tech.ecommerce.enums.ItemStatus;
+import com.super4tech.ecommerce.domain.Buyer;
+import com.super4tech.ecommerce.domain.CartItem;
+import com.super4tech.ecommerce.enums.CartItemStatus;
 
-import java.util.List;
+public interface CartItemRepository extends GenericDao<CartItem> {
 
-public interface CartItemRepository extends GenericDao<Item> {
+    public CartItem findByBuyer(Buyer buyer);
 
-    public void  deleteItemByCart(Long cartId);
-    List<Product> findAllByItemStatusAndProduct(ItemStatus itemStatus, Product product);
+    public CartItem findByBuyerAndCartStatus(Buyer buyer, CartItemStatus status) ;
 
-    void setItemStatus(ItemStatus itemStatus, Long cartID );
-
-    
 }

@@ -2,10 +2,11 @@ package com.super4tech.ecommerce.controller;
 
 
 import com.super4tech.ecommerce.domain.*;
+import com.super4tech.ecommerce.enums.CartItemStatus;
 import com.super4tech.ecommerce.enums.ReviewStatus;
-import com.super4tech.ecommerce.enums.ShoppingCartStatus;
 import com.super4tech.ecommerce.exception.NoProductsFoundUnderCategoryException;
 import com.super4tech.ecommerce.service.*;
+import com.super4tech.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,16 +25,13 @@ public class CartController {
     private ProductService productService;
     private CategoryService categoryService;
     private BuyerService buyerService;
-
-    private ShoppingCartService cartItemService;
-
-    private CartItemService itemService;
-
+    private CartItemService cartItemService;
+    private ItemService itemService;
     private ReviewService reviewService;
 
     @Autowired
     public CartController(ReviewService reviewService,ProductService productService, CategoryService categoryService,
-                          BuyerService buyerService, ShoppingCartService cartItemService, CartItemService itemService) {
+                          BuyerService buyerService, CartItemService cartItemService, ItemService itemService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.buyerService = buyerService;
@@ -100,11 +98,11 @@ public class CartController {
         Buyer buyer = buyerService.findByEmail(email);
         List<Item> items = new ArrayList<>();
         //get cart by created
-        ShoppingCart cartItemBuyer = cartItemService.findByBuyerAndCartStatus(buyer, ShoppingCartStatus.Created);
+        CartItem cartItemBuyer = cartItemService.findByBuyerAndCartStatus(buyer, CartItemStatus.Created);
         BigDecimal quantity = new BigDecimal(product.getCartQuantity(), MathContext.DECIMAL64);
         item.setItemPrice(quantity.multiply(productResult.getPrice()));
         if (cartItemBuyer == null) {
-            cartItemBuyer = new ShoppingCart();
+            cartItemBuyer = new CartItem();
 
         } else {
             List<Item> itemsListCart = cartItemBuyer.getItem();
@@ -125,7 +123,7 @@ public class CartController {
 
             item.setProduct(productResult);
             item.setQuantity(product.getCartQuantity());
-            item.setShoppingCart(cartItemBuyer);
+            item.setCartItem(cartItemBuyer);
 
             itemService.save(item);
             return "redirect:/shoppingCart/cartList";
@@ -135,7 +133,7 @@ public class CartController {
         items.add(item);
         cartItemBuyer.setItem(items);
         cartItemBuyer.setBuyer(buyer);
-        item.setShoppingCart(cartItemBuyer);
+        item.setCartItem(cartItemBuyer);
         cartItemService.save(cartItemBuyer);
         return "redirect:/shoppingCart/cartList";
     }
@@ -146,7 +144,7 @@ public class CartController {
         String email = principal.getName();
         Buyer buyer = buyerService.findByEmail(email);
         //CartItem cartItemBuyer = cartItemService.findByBuyer(buyer);
-        ShoppingCart cartItemBuyer = cartItemService.findByBuyerAndCartStatus(buyer,ShoppingCartStatus.Created);
+        CartItem cartItemBuyer = cartItemService.findByBuyerAndCartStatus(buyer, CartItemStatus.Created);
 
 
         if (cartItemBuyer == null) {
@@ -169,7 +167,7 @@ public class CartController {
         Long quantity;
         String email = principal.getName();
         Buyer buyer = buyerService.findByEmail(email);
-        ShoppingCart cartItemBuyer = cartItemService.findByBuyer(buyer);
+        CartItem cartItemBuyer = cartItemService.findByBuyer(buyer);
         List<Item> itemsList = cartItemService.findByBuyer(buyer).getItem();
         for (Item item : itemsList) {
             if (item.getQuantity() > item.getProduct().getAvailableInStor()) {

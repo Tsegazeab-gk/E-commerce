@@ -3,7 +3,7 @@ package com.super4tech.ecommerce.controller;
 
 import com.super4tech.ecommerce.domain.*;
 import com.super4tech.ecommerce.enums.ItemStatus;
-import com.super4tech.ecommerce.enums.ShoppingCartStatus;
+import com.super4tech.ecommerce.enums.CartItemStatus;
 import com.super4tech.ecommerce.helper.CurrentUser;
 import com.super4tech.ecommerce.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,22 +28,22 @@ public class PaymentController {
 
     private final PaymentService paymentService;
     private final OrderService orderService;
-    private final ShoppingCartService cartItemService;
+    private final CartItemService cartItemService;
 
     private final BuyerService buyerService;
    //private CouponPaymentService couponPaymentService;
-    private CartItemService itemService;
+    private ItemService itemService;
 
     @Autowired
-    public PaymentController(CartItemService itemService,PaymentService paymentService,
+    public PaymentController(ItemService itemService, PaymentService paymentService,
                              @Qualifier("OrderServiceImpl") OrderService orderService,
-                             ShoppingCartService shoppingCartService, BuyerService buyerService
-            //, CouponPaymentService couponPaymentService
+                             CartItemService cartItemService, BuyerService buyerService
+                             //, CouponPaymentService couponPaymentService
     )
                              {
         this.paymentService = paymentService;
         this.orderService = orderService;
-        this.cartItemService = shoppingCartService;
+        this.cartItemService = cartItemService;
         this.buyerService = buyerService;
       //  this.couponPaymentService = couponPaymentService;
         this.itemService=itemService;
@@ -52,7 +52,7 @@ public class PaymentController {
     @GetMapping("/{id}")
     public String payment(@PathVariable("id") Long id, Model model) {
 
-        ShoppingCart cartItem = cartItemService.findById(id);
+        CartItem cartItem = cartItemService.findById(id);
 
         Payment payment = new Payment();
 
@@ -66,7 +66,7 @@ public class PaymentController {
             System.out.println("###########"+ cartItem.getCartId());
         }
 
-        payment.setShoppingCart(cartItem);
+        payment.setCartItem(cartItem);
         payment.setTotalPrice(cartItem.getTotalPrice());
         model.addAttribute("payment", payment);
         System.out.println("#####################################>>>>>>>  Payment");
@@ -75,17 +75,18 @@ public class PaymentController {
 
     @PostMapping
     public String payment(@Valid Payment payment, BindingResult result, Model model) {
-        System.out.println(payment.toString()+payment.getShoppingCart());
-        Long id = payment.getShoppingCart().getCartId();
+        System.out.println(payment.toString()+payment.getCartItem());
+        Long id = payment.getCartItem().getCartId();
 
-        ShoppingCart cartItem = cartItemService.findById(id);
+        CartItem cartItem = cartItemService.findById(id);
         payment.setTotalPrice(cartItem.getTotalPrice());
         if (result.hasErrors()) {
-            payment.setShoppingCart(cartItem);
+            payment.setCartItem(cartItem);
             model.addAttribute("payment", payment);
             return "payment/payment";
         }
-        Payment paymentResult = paymentService.save(payment);
+        payment.setCartItem(cartItem);
+        Payment paymentResult = paymentService.updatePayment(payment);
 
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
@@ -99,7 +100,7 @@ public class PaymentController {
         buyer.setUser(user);
         buyerService.update(buyer);
 */
-        order.setShoppingCart(cartItem);
+        order.setCartItem(cartItem);
         updateItemStatus(cartItem);
 
         orderService.addOrder(order);
@@ -107,8 +108,8 @@ public class PaymentController {
     }
 
 
-    public void updateItemStatus(ShoppingCart cartItem){
-        cartItem.setCartStatus(ShoppingCartStatus.ORDERED);
+    public void updateItemStatus(CartItem cartItem){
+        cartItem.setCartItemStatus(CartItemStatus.ORDERED);
         cartItemService.save(cartItem);
        itemService.setItemStatus(ItemStatus.ORDERED, cartItem.getCartId());
 

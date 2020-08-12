@@ -1,6 +1,6 @@
 package com.super4tech.ecommerce.enums;
 
-public enum ShoppingCartStatus {
+public enum CartItemStatus {
     Created,
     ORDERED,
     SHIPPED,

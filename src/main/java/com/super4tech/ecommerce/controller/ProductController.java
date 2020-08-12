@@ -31,10 +31,10 @@ public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;
     private SellerService sellerService;
-    private CartItemService itemService;
+    private ItemService itemService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService, SellerService sellerService, CartItemService itemService) {
+    public ProductController(ProductService productService, CategoryService categoryService, SellerService sellerService, ItemService itemService) {
 
         this.productService = productService;
         this.categoryService = categoryService;

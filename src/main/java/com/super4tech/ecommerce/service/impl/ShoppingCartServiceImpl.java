@@ -50,10 +50,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void deleteItem(Item item) {
-/*
-        ShoppingCart shoppingCart=cartRepository.findById(item.getCartItem().getCartId()).get();
-cartRepository.getItem().r
-*/
+
+        ShoppingCart shoppingCart=cartRepository.findById(item.getShoppingCart().getCartId());
+        shoppingCart.getItem().remove(shoppingCart);
+
+cartRepository.update(shoppingCart);
+
 
     }
 }

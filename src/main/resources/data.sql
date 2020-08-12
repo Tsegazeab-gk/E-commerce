@@ -12,7 +12,6 @@ INSERT INTO buyer (coupons, email, first_name, last_name, user_id, id)
 VALUES(0,'buyer@gmail.com','Tsegazeab','Gudey',30,30);
 
 
-
 INSERT INTO User (user_id, active, password, username)VALUES
 (20, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'seller@gmail.com');
 INSERT INTO user_role (user_id, role_id) VALUES(20,3);
@@ -21,25 +20,25 @@ VALUES(20,'seller@gmail.com','Hailu Hagos','112','111',20);
 
 
 INSERT INTO User (user_id, active, password, username)
-VALUES (50, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'mahi@gmail.com');
-INSERT INTO user_role (user_id, role_id) VALUES(50,3);
+VALUES (50, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'lisa@gmail.com');
+INSERT INTO user_role (user_id, role_id) VALUES(50,2);
 INSERT INTO  Seller (SERLLER_ID,EMAIL,FULL_NAME,AREA_CODE,PHONE_NUMBER,USER_ID)
-VALUES(50,'mahi@gmail.com','Gebrehiywet ','112','111',50);
+VALUES(50,'lisa@gmail.com','Elsabeth ','112','111',50);
 
 
 INSERT INTO User (user_id, active, password, username)VALUES
-(40, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'lina@gmail.com');
+(40, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'addis@gmail.com');
 INSERT INTO user_role (user_id, role_id) VALUES(40,3);
 INSERT INTO  Seller (SERLLER_ID,EMAIL,FULL_NAME,AREA_CODE,PHONE_NUMBER,USER_ID)
-VALUES(40,'lina@gmail.com','Saron','112','111',40);
+VALUES(40,'addis@gmail.com','Addis','112','111',40);
 
 
 
 INSERT INTO User (user_id, active, password, username)VALUES
-(60, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'lina@gmail.com');
+(60, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'seller2@gmail.com');
 INSERT INTO user_role (user_id, role_id) VALUES(60,3);
 INSERT INTO  Seller (SERLLER_ID,EMAIL,FULL_NAME,AREA_CODE,PHONE_NUMBER,USER_ID)
-VALUES(60,'girma@gmail.com','Girma','112','111',60);
+VALUES(60,'seller2@gmail.com','Seller N Name','112','111',60);
 
 
 --$2y$12$rW7MkmPuiF101uqJFlXAT.DpJFA4G0qzxSrmUp9Wl0wblSd0SZx0G

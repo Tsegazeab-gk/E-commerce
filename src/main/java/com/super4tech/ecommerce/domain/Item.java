@@ -30,7 +30,7 @@ public class Item {
     private Product product;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cart_ID")
+    @JoinColumn(name = "Cart_Id")
     private ShoppingCart shoppingCart;
 
     @Override

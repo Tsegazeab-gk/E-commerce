@@ -29,20 +29,21 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final OrderService orderService;
     private final ShoppingCartService cartItemService;
+
     private final BuyerService buyerService;
-    //private CouponPaymentService couponPaymentService;
+   //private CouponPaymentService couponPaymentService;
     private CartItemService itemService;
 
     @Autowired
     public PaymentController(CartItemService itemService,PaymentService paymentService,
                              @Qualifier("OrderServiceImpl") OrderService orderService,
-                             ShoppingCartService cartItemService, BuyerService buyerService
+                             ShoppingCartService shoppingCartService, BuyerService buyerService
             //, CouponPaymentService couponPaymentService
     )
                              {
         this.paymentService = paymentService;
         this.orderService = orderService;
-        this.cartItemService = cartItemService;
+        this.cartItemService = shoppingCartService;
         this.buyerService = buyerService;
       //  this.couponPaymentService = couponPaymentService;
         this.itemService=itemService;
@@ -50,7 +51,9 @@ public class PaymentController {
 
     @GetMapping("/{id}")
     public String payment(@PathVariable("id") Long id, Model model) {
+
         ShoppingCart cartItem = cartItemService.findById(id);
+
         Payment payment = new Payment();
 
         List<Payment> paymentHistorys = paymentService.getAllByUserName(CurrentUser.loggedInUserName());
@@ -72,7 +75,7 @@ public class PaymentController {
 
     @PostMapping
     public String payment(@Valid Payment payment, BindingResult result, Model model) {
-        System.out.println(payment.toString());
+        System.out.println(payment.toString()+payment.getShoppingCart());
         Long id = payment.getShoppingCart().getCartId();
 
         ShoppingCart cartItem = cartItemService.findById(id);
@@ -83,10 +86,11 @@ public class PaymentController {
             return "payment/payment";
         }
         Payment paymentResult = paymentService.save(payment);
+
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setPayment(paymentResult);
-
+/*
         //  Update Buyer Coupons
         Buyer buyer = buyerService.findOne(cartItem.getBuyer().getId());
         buyer.setCoupons(buyer.getCoupons() + 1);
@@ -94,7 +98,7 @@ public class PaymentController {
         user.setMatchingPassword(user.getPassword());
         buyer.setUser(user);
         buyerService.update(buyer);
-
+*/
         order.setShoppingCart(cartItem);
         updateItemStatus(cartItem);
 

@@ -53,7 +53,7 @@ public class Payment {
     private BillingAddress billingAddress;
 
     @JoinColumn
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private ShoppingCart shoppingCart;
 
     private Boolean rememberMe;

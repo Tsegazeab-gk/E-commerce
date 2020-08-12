@@ -1,36 +1,55 @@
 package com.super4tech.ecommerce.domain;
 
 import javax.persistence.*;
+import java.util.List;
+
+
 
 @Entity
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id = null;
+    @GeneratedValue
+    private Long categoryId;
 
-    @Column
-    private String name;
+    private String categoryName;
 
-   public Category(){}
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Product> products;
 
-    public Category(String name) {
-        this.name = name;
+
+	@Override
+	public String toString() {
+		return "Category{" +
+				"categoryId=" + categoryId +
+				", categoryName='" + categoryName + '\'' +
+
+				'}';
+	}
+
+	public String getCategoryName() {
+        return categoryName;
     }
 
-    public Long getId() {
-        return id;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getCategoryId() {
+		return categoryId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+
 }

@@ -2,10 +2,9 @@ package com.super4tech.ecommerce.repository.impl;
 
 import com.super4tech.ecommerce.domain.Category;
 import com.super4tech.ecommerce.domain.Product;
-import com.super4tech.ecommerce.domain.Supplier;
+import com.super4tech.ecommerce.domain.Seller;
 import com.super4tech.ecommerce.repository.ProductRepository;
 import org.springframework.stereotype.Repository;
-
 
 import javax.persistence.Query;
 import java.util.List;
@@ -41,9 +40,9 @@ public class ProductRepositoryImpl extends GenericDaoImpl<Product> implements Pr
     }
 
     @Override
-    public List<Product> findProductBySupplier(Supplier supplier) {
-        Query query= entityManager.createQuery("select p FROM Product  p where p.supplier=:supplier");
-        query.setParameter("supplier",supplier);
+    public List<Product> findProductBySupplier(Seller seller) {
+        Query query= entityManager.createQuery("select p FROM Product  p where p.seller=:seller");
+        query.setParameter("seller",seller);
         return query.getResultList();
     }
 

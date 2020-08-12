@@ -2,7 +2,6 @@ package com.super4tech.ecommerce.repository;
 
 import com.super4tech.ecommerce.domain.Product;
 import com.super4tech.ecommerce.domain.Review;
-import com.super4tech.ecommerce.domain.ShoppingCart;
 import com.super4tech.ecommerce.enums.ReviewStatus;
 
 import java.util.List;

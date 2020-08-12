@@ -3,12 +3,14 @@ package com.super4tech.ecommerce.service;
 import com.super4tech.ecommerce.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-    public void save(User address);
-    public void update(User address);
-    public List<User> findAll();
-//    User findByUserName(String username);
 
-    public User findOne(Long id);
+    public List<User> findAll();
+    public User save(User user);
+    public User findById(Long id);
+    public  User  findByUserName(String userName);
+    public User update(User user);
+
 }

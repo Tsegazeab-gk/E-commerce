@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface GenericDao<T> {
 
-    void save(T t);
+    T save(T t);
 
     void deleteById(Long id);
 

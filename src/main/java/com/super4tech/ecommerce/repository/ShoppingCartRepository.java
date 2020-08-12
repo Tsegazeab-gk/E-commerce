@@ -1,14 +1,13 @@
 package com.super4tech.ecommerce.repository;
 
-import com.super4tech.ecommerce.domain.*;
-import com.super4tech.ecommerce.enums.CartStatus;
-
-import java.util.List;
+import com.super4tech.ecommerce.domain.Buyer;
+import com.super4tech.ecommerce.domain.ShoppingCart;
+import com.super4tech.ecommerce.enums.ShoppingCartStatus;
 
 public interface ShoppingCartRepository extends GenericDao<ShoppingCart> {
 
-    public ShoppingCart findByCustomer(Customer customer);
+    public ShoppingCart findByBuyer(Buyer buyer);
 
-    public ShoppingCart findByCustomerAndCartStatus(Customer customer, CartStatus status) ;
+    public ShoppingCart findByBuyerAndCartStatus(Buyer buyer, ShoppingCartStatus status) ;
 
 }

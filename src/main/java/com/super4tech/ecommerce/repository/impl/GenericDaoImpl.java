@@ -3,10 +3,9 @@ package com.super4tech.ecommerce.repository.impl;
 import com.super4tech.ecommerce.repository.GenericDao;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
@@ -21,8 +20,9 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 	}
    
     @Override
-    public void save( T entity ){
+    public T save( T entity ){
         entityManager.persist( entity );
+        return entity;
      }
 
     public void delete( T entity ){

@@ -2,7 +2,7 @@ package com.super4tech.ecommerce.service;
 
 import com.super4tech.ecommerce.domain.Category;
 import com.super4tech.ecommerce.domain.Product;
-import com.super4tech.ecommerce.domain.Supplier;
+import com.super4tech.ecommerce.domain.Seller;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface ProductService {
 
     public List<Product> findAllByCategoryAndAvailable(Category category, boolean isAvailable);
     public List<Product> findAllByAvailable(boolean isAvailable);
-    public List<Product>  findProductBySupplier(Supplier supplier);
+    public List<Product>  findProductBySeller(Seller seller);
 
     public void delete(Product product);
 

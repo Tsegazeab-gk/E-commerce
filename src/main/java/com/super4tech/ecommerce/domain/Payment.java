@@ -1,159 +1,60 @@
 package com.super4tech.ecommerce.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 @Entity
-@Table(name = "Payment")
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Payment_Id")
-    private Long id = null;
+    private Long Id;
 
-
-    @Column
-    private int Cvv;
-
-    @Column(name = "Card_Name")
+    @NotBlank
+    private String cardType = "VISA";
+    @NotBlank
     private String cardName;
-
-    @Column(name = "Card_Number")
+    @NotBlank
+    @Size(min = 10, max = 20,message = "{size.cardNumber}")
     private String cardNumber;
+    @NotNull
+    private Double totalPrice;
 
-    @Column(name = "Card_Type")
-    private String CardType;
+    @NotNull
+    private Integer expYear;
 
-    @Column(name = "Exp_Month")
-    private Date expiredMonth;
+    @NotBlank
+    private String expMonth;
 
-    @Column(name = "Exp_Year")
-    private Date expiredYear;
+    @NotNull
+    @Range(min = 100, max = 9999, message = "{size.CVV}")
+    private Integer CVV;
 
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    private ShippingAddress shippingAddress;
 
-    @Column
-    private double amount;
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    private BillingAddress billingAddress;
 
+    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    private ShoppingCart shoppingCart;
 
-    @ManyToOne
-    @JoinColumn(name = "Shipping_Adress_Id")
-private  Address shippingAddress;
-
-@ManyToOne
-@JoinColumn(name = "Billing_Adress_Id")
-private  Address billingAddress;
-
-@OneToOne(mappedBy = "payment")
-private ZOrder order;
-
-    public Payment() {
-    }
-
-    public Payment(int cvv, String cardName, String cardNumber, String cardType, Date expiredMonth, Date expiredYear, double amount) {
-        Cvv = cvv;
-        this.cardName = cardName;
-        this.cardNumber = cardNumber;
-        CardType = cardType;
-        this.expiredMonth = expiredMonth;
-        this.expiredYear = expiredYear;
-        this.amount = amount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getCvv() {
-        return Cvv;
-    }
-
-    public void setCvv(int cvv) {
-        Cvv = cvv;
-    }
-
-    public String getCardName() {
-        return cardName;
-    }
-
-    public void setCardName(String cardName) {
-        this.cardName = cardName;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getCardType() {
-        return CardType;
-    }
-
-    public void setCardType(String cardType) {
-        CardType = cardType;
-    }
-
-    public Date getExpiredMonth() {
-        return expiredMonth;
-    }
-
-    public void setExpiredMonth(Date expiredMonth) {
-        this.expiredMonth = expiredMonth;
-    }
-
-    public Date getExpiredYear() {
-        return expiredYear;
-    }
-
-    public void setExpiredYear(Date expiredYear) {
-        this.expiredYear = expiredYear;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
-
-    public Address getBillingAddress() {
-        return billingAddress;
-    }
-
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderPayment{" +
-                "id=" + id +
-                ", Cvv=" + Cvv +
-                ", cardName='" + cardName + '\'' +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", CardType='" + CardType + '\'' +
-                ", expiredMonth=" + expiredMonth +
-                ", expiredYear=" + expiredYear +
-                ", amount=" + amount +
-                ", shippingAddress=" + shippingAddress +
-                ", billingAddress=" + billingAddress +
-                '}';
-    }
+    private Boolean rememberMe;
 }

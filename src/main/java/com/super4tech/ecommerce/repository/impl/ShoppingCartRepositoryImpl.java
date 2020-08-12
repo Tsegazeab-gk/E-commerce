@@ -1,15 +1,13 @@
 package com.super4tech.ecommerce.repository.impl;
 
-import com.super4tech.ecommerce.domain.CartItem;
-import com.super4tech.ecommerce.domain.Customer;
+import com.super4tech.ecommerce.domain.Buyer;
 import com.super4tech.ecommerce.domain.ShoppingCart;
-
-import com.super4tech.ecommerce.enums.CartStatus;
+import com.super4tech.ecommerce.enums.ShoppingCartStatus;
 import com.super4tech.ecommerce.repository.ShoppingCartRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 
 @Repository
@@ -20,21 +18,29 @@ public class ShoppingCartRepositoryImpl extends GenericDaoImpl<ShoppingCart> imp
     }
 
     @Override
-    public ShoppingCart findByCustomer(Customer customer) {
+    public ShoppingCart findByBuyer(Buyer buyer) {
 
-        Query query=entityManager.createQuery("select sc from ShoppingCart  sc where sc.customer=:customer");
-        query.setParameter("customer",customer);
+        Query query=entityManager.createQuery("select s from ShoppingCart  s where s.buyer=:buyer");
+        query.setParameter("buyer",buyer);
         return (ShoppingCart) query.getSingleResult();
 
 
     }
 
     @Override
-    public ShoppingCart findByCustomerAndCartStatus(Customer customer, CartStatus status) {
-        Query query=entityManager.createQuery("select sc from ShoppingCart  sc where sc.customer=:customer AND sc.status=:status");
-        query.setParameter("customer",customer);
+    public ShoppingCart findByBuyerAndCartStatus(Buyer buyer, ShoppingCartStatus status) {
+        Query query=entityManager.createQuery("select s from ShoppingCart  s where s.buyer=:buyer AND s.cartStatus=:status");
+        query.setParameter("buyer",buyer);
         query.setParameter("status",status);
-        return (ShoppingCart) query.getSingleResult();
+
+        ShoppingCart cart=null;
+try {
+    cart = (ShoppingCart) query.getSingleResult();
+}catch (NoResultException e){
+    System.out.println("findByBuyerAndCartStatus----->> cart="+cart);
+}
+
+        return cart;
 
 
     }

@@ -2,7 +2,7 @@ package com.super4tech.ecommerce.service.impl;
 
 import com.super4tech.ecommerce.domain.Category;
 import com.super4tech.ecommerce.domain.Product;
-import com.super4tech.ecommerce.domain.Supplier;
+import com.super4tech.ecommerce.domain.Seller;
 import com.super4tech.ecommerce.repository.ProductRepository;
 import com.super4tech.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +54,11 @@ public class ProductServiceImpl implements ProductService {
         return repository.findAllByAvailable(isAvailable);
     }
 
+
+
     @Override
-    public List<Product> findProductBySupplier(Supplier supplier) {
-        return repository.findProductBySupplier(supplier);
+    public List<Product> findProductBySeller(Seller seller) {
+        return repository.findProductBySupplier(seller);
     }
 
     @Override

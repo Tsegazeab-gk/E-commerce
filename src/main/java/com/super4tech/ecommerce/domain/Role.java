@@ -1,33 +1,25 @@
 package com.super4tech.ecommerce.domain;
 
-import com.super4tech.ecommerce.config.RoleEnum;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 @Entity
 public class Role {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-    @Column(nullable = false)
-    private String role_name;
+	@Id
+	@GeneratedValue
+	private Long id;
+	private String roleName;
 
-    public Role() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getRole_name() {
-        return role_name;
-    }
-
-    public void setRole_name(String role_name) {
-        this.role_name = role_name;
-    }
+ enum RoleType{
+		ADMIN ,SELLER,BUYER
+ }
 }

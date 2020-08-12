@@ -30,6 +30,7 @@ public class ReviewRepositoryImpl extends GenericDaoImpl<Review> implements Revi
     public List<Review> findAllByProductAndReviewStatus(Product product, ReviewStatus reviewStatus) {
 
         Query query=entityManager.createQuery("select r from Review r where r.product=:product AND r.reviewStatus=:reviewStatus");
+        query.setParameter("product",product);
         query.setParameter("reviewStatus",reviewStatus);
         return query.getResultList();
     }

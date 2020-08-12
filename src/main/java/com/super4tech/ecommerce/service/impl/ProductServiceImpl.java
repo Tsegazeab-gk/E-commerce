@@ -23,16 +23,10 @@ public class ProductServiceImpl implements ProductService {
         return repository.findOne(id);
     }
 
-//    public Order findOne(Long id, Map<String,Object> hints) {
-//        return orderDao.findOne(id, (Map<String,Object>)hints);
-//    }
-//
-//    public Order findByGraph(Long id) {
-//
-//        return orderDao.findByGraph(id);
-//    }
-//
     public List<Product> findAll() {
         return (List<Product>)repository.findAll();
+    }
+    public void delete(Long id){
+        repository.delete(id);
     }
 }

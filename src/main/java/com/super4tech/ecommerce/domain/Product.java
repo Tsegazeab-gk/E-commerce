@@ -1,27 +1,22 @@
 package com.super4tech.ecommerce.domain;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.util.*;
-
-import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
 
+    @Size(min = 4, max = 20, message = "{Size.validation}")
     @Column(name = "product_number")
     private String productNumber;
-
 
     @Column
     private String name;
@@ -33,37 +28,41 @@ public class Product {
     private double price;
 
     @Column
-    private boolean isAvailable;
-
+    private boolean isAvailable = true;
 
     @Column
     private boolean availableInStore;
 
 
+    @Transient
+    private MultipartFile productImage;
+    /*
+        @OneToMany
+        @JoinColumn(name = "Product_Id")
+    private List<CartItem> cartItems;
+    */
+    @ManyToOne
+    private  Supplier supplier;
+
 //    @OneToMany
-//    @JoinColumn
-//    private List<CartItem> cartItems;
-//
-//    @ManyToOne()
-//    private  Supplier supplier;
-//
-////    @OneToMany
-////    @JoinColumn(name = "Product_Id")
+//    @JoinColumn(name = "Product_Id")
 //    private List<Review> reviews;
 
-//    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-//    private Category category;
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @JoinColumn(name = "category")
+    private Category category;
 
     public Product() {
     }
 
-    public Product(String productNumber, String name, String description, double price, boolean isAvailable, boolean availableInStore) {
+    public Product( String productNumber, String name, String description,
+                    double price, boolean availableInStore, MultipartFile productImage) {
         this.productNumber = productNumber;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.isAvailable = isAvailable;
         this.availableInStore = availableInStore;
+        this.productImage = productImage;
     }
 
     public Long getId() {
@@ -121,23 +120,22 @@ public class Product {
     public void setAvailableInStore(boolean availableInStore) {
         this.availableInStore = availableInStore;
     }
+    /*
+        public List<CartItem> getCartItems() {
+            return cartItems;
+        }
+        public void setCartItems(List<CartItem> cartItems) {
+            this.cartItems = cartItems;
+        }
+    */
+    public Supplier getSupplier() {
+        return supplier;
+    }
 
-//    public List<CartItem> getCartItems() {
-//        return cartItems;
-//    }
-//
-//    public void setCartItems(List<CartItem> cartItems) {
-//        this.cartItems = cartItems;
-//    }
-//
-//    public Supplier getSupplier() {
-//        return supplier;
-//    }
-//
-//    public void setSupplier(Supplier supplier) {
-//        this.supplier = supplier;
-//    }
-//
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
 //    public List<Review> getReviews() {
 //        return reviews;
 //    }
@@ -146,13 +144,21 @@ public class Product {
 //        this.reviews = reviews;
 //    }
 
-//    public Category getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public MultipartFile getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(MultipartFile productImage) {
+        this.productImage = productImage;
+    }
 
     @Override
     public String toString() {
@@ -162,12 +168,12 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", isAvailable=" + isAvailable +
                 ", availableInStore=" + availableInStore +
-//                ", cartItems=" + cartItems +
-//                ", supplier=" + supplier +
-//                ", reviews=" + reviews +
-               // ", category=" + category +
+                ", productImage=" + productImage +
+
+                ", supplier=" + supplier +
+                //", reviews=" + reviews +
+                ", category=" + category +
                 '}';
     }
 }

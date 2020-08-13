@@ -3,10 +3,11 @@ package com.super4tech.ecommerce.messaging.request;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = OrderMessage.class)
-public class OrderItemMessage {
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = OrderItemMessage.class)
+public class OrderItemMessage   {
 
     private Long id;
     private BigDecimal itemPrice;

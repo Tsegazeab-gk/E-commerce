@@ -36,14 +36,29 @@ public class AmqpConfiguration {
 	public AmqpAdmin amqpAdmin() {
 		return new RabbitAdmin(connectionFactory());
 	}
+
 	@Bean
 	Queue purchasesOnlineQueue() {
 		return new Queue("emailOrderDetailQueue", true);
 	}
+
+
+
 	@Bean
 	public Queue purchasesOnlineClassicQueue() {
 		return new Queue("purchasesOnlineClassic");
 	}
+
+	@Bean
+	public  Queue orderQueue(){
+	    	return  new Queue("orderInformation",true);
+	}
+
+	@Bean
+	DirectExchange orderDirectExchange() {
+		return new DirectExchange("order-direct-exchange");
+	}
+
 	@Bean
 	TopicExchange orderExchange() {
 		return new TopicExchange("orderDetailExchange");
@@ -57,10 +72,16 @@ public class AmqpConfiguration {
 	}
 
 	@Bean
-	public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+	Binding orderBinding(Queue orderQueue, DirectExchange orderDirectExchange) {
+		return BindingBuilder.bind(orderQueue).to(orderDirectExchange).with("order.detail");
+	}
+
+
+	@Bean
+	public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
 		RabbitTemplate orderOnlineTemplate= new RabbitTemplate(connectionFactory);
-	orderOnlineTemplate.setRoutingKey("purchases.online");
-		orderOnlineTemplate.setExchange("orderDetailExchange");
+	orderOnlineTemplate.setRoutingKey("order.detail");
+		orderOnlineTemplate.setExchange("order-direct-exchange");
 		 orderOnlineTemplate.setMessageConverter(jsonMessageConverter());
 		 orderOnlineTemplate.setReplyTimeout(2000);
 		return orderOnlineTemplate;

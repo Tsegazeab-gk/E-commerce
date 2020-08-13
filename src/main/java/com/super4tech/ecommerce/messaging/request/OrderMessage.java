@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.super4tech.ecommerce.enums.CartItemStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+//
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope =OrderMessage.class)
-public class OrderMessage {
+public class OrderMessage   {
 
     private Long id;
 
@@ -84,7 +86,6 @@ public class OrderMessage {
         this.orderItemMessages = orderItemMessages;
     }
 
-
     @Override
     public String toString() {
         return "OrderMessage{" +
@@ -94,7 +95,7 @@ public class OrderMessage {
                 ", buyerEmail='" + buyerEmail + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", cartItemStatus=" + cartItemStatus +
-             //   ", orderItemMessages=" + orderItemMessages +
+                ", orderItemMessages=" + orderItemMessages +
                 '}';
     }
 }

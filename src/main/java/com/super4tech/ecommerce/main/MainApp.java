@@ -36,6 +36,7 @@ public class MainApp {
         OrderService orderService=new OrderServiceImpl();
 
         OrderRequest orderRequest=new OrderRequest(1L,"hahah");
+
         OrderItemMessage orderItemMessage=new OrderItemMessageBuilder()
                 .withId(1L)
                 .withItemPrice(new BigDecimal(500))
@@ -50,7 +51,7 @@ public class MainApp {
                 .withBuyerEmail("tsegidey@gmail.com")
                 .withBuyerPrice(1500)
                // .withOrderedDate(LocalDateTime.now())
-              .withOrderItemMessage(null)
+              .withOrderItemMessage(itemMessages)
                 .withCartItemStatus(CartItemStatus.Created).build();
 
 

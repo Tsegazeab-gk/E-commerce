@@ -6,10 +6,10 @@ INSERT INTO Role VALUES (3, 'SELLER');
 -- $2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6
 
 INSERT INTO User (user_id, active, password, username)
-VALUES (30, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'tsegidey@gmail.com');
+VALUES (30, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'buyer@gmail.com');
 INSERT INTO user_role (user_id, role_id) VALUES(30,2);
-INSERT INTO buyer ( email, first_name, last_name, user_id, id)
-VALUES('tsegidey@gmail.com','Tsegazeab','Gudey',30,30);
+INSERT INTO buyer (email, first_name, last_name, user_id, id)
+VALUES('buyer@gmail.com','Tsegazeab','Gudey',30,30);
 
 
 INSERT INTO User (user_id, active, password, username)VALUES
@@ -50,6 +50,12 @@ INSERT INTO Admin (email, first_name, last_name, user_id, id)
 VALUES('admin@gmail.com','admin first name','admin last name',70,70);
 
 
+
+INSERT INTO User (user_id, active, password, username)
+VALUES (74, 1,'$2a$10$L0.rBaVpWXnEUzMAgOHynuE/8pmxVA0zWsd3eL6xI.UR69G.nR5P6', 'hailu@gmail.com');
+INSERT INTO user_role (user_id, role_id) VALUES(74, 1);
+INSERT INTO Admin (email, first_name, last_name, user_id, id)
+VALUES('hailu@gmail.com','Hailu Hagos','Hiluf',74,74);
 
 INSERT INTO Category VALUES (1, 'Phone');
 INSERT INTO Category VALUES (2, 'Computer');

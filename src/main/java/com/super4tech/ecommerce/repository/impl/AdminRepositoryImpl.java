@@ -2,6 +2,7 @@ package com.super4tech.ecommerce.repository.impl;
 
 import com.super4tech.ecommerce.domain.Admin;
 import com.super4tech.ecommerce.repository.AdminRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;

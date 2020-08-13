@@ -10,6 +10,7 @@ import com.super4tech.ecommerce.domain.Order;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +19,8 @@ import java.util.logging.Logger;
 public class GeneratePdf {
     public static ByteArrayInputStream orderReport(List<Order> orders) {
         Order oneOrder = orders.stream().findFirst().get();
+
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         Document document = new Document();

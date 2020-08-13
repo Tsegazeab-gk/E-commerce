@@ -84,6 +84,7 @@ public class OrderMessage {
         this.orderItemMessages = orderItemMessages;
     }
 
+
     @Override
     public String toString() {
         return "OrderMessage{" +
@@ -92,7 +93,8 @@ public class OrderMessage {
                 ", buyerName='" + buyerName + '\'' +
                 ", buyerEmail='" + buyerEmail + '\'' +
                 ", totalPrice=" + totalPrice +
-                ", cartItemStatus='" + cartItemStatus + '\'' +
+                ", cartItemStatus=" + cartItemStatus +
+             //   ", orderItemMessages=" + orderItemMessages +
                 '}';
     }
 }

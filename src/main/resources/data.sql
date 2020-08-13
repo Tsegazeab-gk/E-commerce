@@ -55,6 +55,13 @@ INSERT INTO Category VALUES (1, 'Phone');
 INSERT INTO Category VALUES (2, 'Computer');
 INSERT INTO Category VALUES (3, 'Food');
 
+
+         INSERT INTO Category VALUES (4, 'Clothes');
+          INSERT INTO Category VALUES (5, 'Books');
+         INSERT INTO Category VALUES (6, 'Musics');
+          INSERT INTO Category VALUES (7, 'Cosmetics');
+           INSERT INTO Category VALUES (8, 'shoes');
+
 INSERT INTO Product VALUES ( 20,2 , 'Phone the lightest 7 inch tablet with a quad-core S4',true, 713,'P123','iPhone ','iPhone 7s',1,20);
 INSERT INTO Product VALUES ( 21,3 , 'Google Nexus 7 is the lightest 7 inch tablet with a',false, 1364.7,'pC1235','Dell Inspirit','Dell Inspiron',2,20);
 
@@ -67,4 +74,8 @@ INSERT INTO Product VALUES ( 26,3 , 'Google Nexus 7 is the lightest 7 inch table
 
 INSERT INTO Product VALUES ( 27,5 , 'Foods against each other by labelling them',true, 22.5,'F1234','Apple ','Apple Inspiron',3,20);
 INSERT INTO Product VALUES ( 28,3 , 'Foods against each other by labelling them',true, 12.5,'F123','Banana','Banana Inspiron',3,20);
+
+
+
+--INSERT INTO Product VALUES ( 29,5 , 'American Dirt (Oprahs Book Club): A Novel',true, 22.5,'B1234','American Dirt Book ','American Dirt Book ',5,20);
 

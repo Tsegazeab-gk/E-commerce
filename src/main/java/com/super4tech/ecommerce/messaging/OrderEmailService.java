@@ -7,5 +7,5 @@ import org.springframework.stereotype.Component;
 
 public interface OrderEmailService {
 
-    public void publish(OrderMessage order) ;
+    public void publish(OrderRequest orderRequest) ;
 }

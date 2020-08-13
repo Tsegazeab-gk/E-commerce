@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/seller")
 public class ProductController {
 
-  //  private static String UPLOADED_FOLDER = "/Users/mahlet/Documents/GitHub/WAA_onlineShooping/images/";
+
     private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "/images/";
 
     private ProductService productService;

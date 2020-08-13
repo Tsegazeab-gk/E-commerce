@@ -39,7 +39,7 @@ private ReviewRepository reviewRepository ;
 
     @Override
     public void delete(Review review) {
-         reviewRepository.deleteById(review.getId());
+         reviewRepository.deleteById(review.getReviewId());
 
     }
 

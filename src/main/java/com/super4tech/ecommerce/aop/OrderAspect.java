@@ -40,7 +40,7 @@ public class OrderAspect {
         System.out.println(jp.getSignature().getName());
         System.out.println("------------AOP-------------------------------------------------");
         System.out.println("------------------------------->"+order.toString());
-       //orderEmailService.publish(orderMessage);
+       orderEmailService.publish(orderMessage);
 
     }
 

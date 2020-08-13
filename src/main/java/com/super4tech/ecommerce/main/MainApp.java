@@ -57,7 +57,7 @@ public class MainApp {
 
         OrderEmailService orderEmailService= (OrderEmailService) context.getBean("orderEmailService");
 
-        orderEmailService.publish(orderRequest);
+        orderEmailService.publish(orderMessage);
 
 
         try {

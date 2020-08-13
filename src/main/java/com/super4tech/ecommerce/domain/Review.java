@@ -14,7 +14,7 @@ public class Review {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long reviewId;
 
 	@ManyToOne
 	@JoinColumn(name="buyer_id")
@@ -37,7 +37,7 @@ public class Review {
 	@Override
 	public String toString() {
 		return "Review{" +
-				"id=" + id +
+				"reviewId=" + reviewId +
 				", comment='" + comment + '\'' +
 				'}';
 	}

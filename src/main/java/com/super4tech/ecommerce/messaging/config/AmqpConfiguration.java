@@ -38,7 +38,7 @@ public class AmqpConfiguration {
 	}
 	@Bean
 	Queue purchasesOnlineQueue() {
-		return new Queue("emailOrderQueue", true);
+		return new Queue("emailOrderDetailQueue", true);
 	}
 	@Bean
 	public Queue purchasesOnlineClassicQueue() {
@@ -46,7 +46,7 @@ public class AmqpConfiguration {
 	}
 	@Bean
 	TopicExchange orderExchange() {
-		return new TopicExchange("orderExchange");
+		return new TopicExchange("orderDetailExchange");
 	}
 	@Bean
 	List<Binding> bindings() {
@@ -60,7 +60,7 @@ public class AmqpConfiguration {
 	public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
 		RabbitTemplate orderOnlineTemplate= new RabbitTemplate(connectionFactory);
 	orderOnlineTemplate.setRoutingKey("purchases.online");
-		orderOnlineTemplate.setExchange("orderExchange");
+		orderOnlineTemplate.setExchange("orderDetailExchange");
 		 orderOnlineTemplate.setMessageConverter(jsonMessageConverter());
 		 orderOnlineTemplate.setReplyTimeout(2000);
 		return orderOnlineTemplate;

@@ -52,7 +52,7 @@ public class CartItemServiceImpl implements CartItemService {
     public void deleteItem(Item item) {
 
         CartItem cartItem =cartRepository.findById(item.getCartItem().getCartId());
-        cartItem.getItem().remove(cartItem);
+        cartItem.getItem().remove(item);
 
 cartRepository.update(cartItem);
 

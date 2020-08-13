@@ -31,14 +31,14 @@ public class PaymentController {
     private final CartItemService cartItemService;
 
     private final BuyerService buyerService;
-   //private CouponPaymentService couponPaymentService;
+
     private ItemService itemService;
 
     @Autowired
     public PaymentController(ItemService itemService, PaymentService paymentService,
                              @Qualifier("OrderServiceImpl") OrderService orderService,
                              CartItemService cartItemService, BuyerService buyerService
-                             //, CouponPaymentService couponPaymentService
+
     )
                              {
         this.paymentService = paymentService;

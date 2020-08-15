@@ -68,7 +68,6 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrder(Long id) {
         Optional<Order> order = Optional.ofNullable(orderRepository.findById(id));
         if (!order.isPresent()) {
-            // a cusmtom excepttion has to be thrown
             try {
                 throw new Exception("order not found");
             } catch (Exception e) {

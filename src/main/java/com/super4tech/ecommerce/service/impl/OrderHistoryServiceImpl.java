@@ -46,12 +46,6 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
                 .sorted((o1, o2) -> o1.getId().compareTo(o2.getId()))
                 .collect(Collectors.toList());
 
-//        if (order.isPresent()) {
-//            historyOrders.add(order.get());
-//        }
-//        return historyOrders.stream()
-//                .sorted((o1, o2) -> o1.getId().compareTo(o2.getId()))
-//                .collect(Collectors.toList());
     }
 
     @Override

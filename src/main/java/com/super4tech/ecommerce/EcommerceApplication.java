@@ -2,7 +2,6 @@ package com.super4tech.ecommerce;
 
 
 import com.super4tech.ecommerce.messaging.OrderEmailService;
-import com.super4tech.ecommerce.messaging.OrderRequest;
 import com.super4tech.ecommerce.messaging.config.AmqpConfiguration;
 import com.super4tech.ecommerce.service.BuyerService;
 import com.super4tech.ecommerce.service.OrderService;

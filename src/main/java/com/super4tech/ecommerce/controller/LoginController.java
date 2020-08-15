@@ -27,7 +27,7 @@ public class LoginController {
 
     @RequestMapping("/login-error")
     public String loginError(Model model) {
-        System.out.print("error login page ");
+        System.out.print("login error ");
         model.addAttribute("loginError", true);
         return "login";
     }

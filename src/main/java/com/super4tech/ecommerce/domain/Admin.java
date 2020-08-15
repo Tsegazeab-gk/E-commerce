@@ -24,7 +24,6 @@ public class Admin {
     @Size(min = 4, max = 50, message = "{Size.validation}")
     private String lastName;
     @Email(message = "{email.validation}")
-//    @ValidEmail(message = "{email.customerValidation}")
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

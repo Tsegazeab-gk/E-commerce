@@ -26,9 +26,6 @@ public class Notification {
 
     private Boolean seen;
 
-//    @OneToOne
-//    private Buyer buyer;
-
 
     public Long getId() {
         return id;

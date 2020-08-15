@@ -31,16 +31,12 @@ public class Buyer {
     @Email(message = "{email.validation}")
     @ValidEmail(message = "{email.customerValidation}")
     private String email;
-   // private Integer coupons = 0;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_Id")
     @Valid
     private User user;
-/*
-    @ManyToMany
-    @JoinTable (name="Follower")
-    private List<Seller> seller;*/
+
 
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Review> reviews;

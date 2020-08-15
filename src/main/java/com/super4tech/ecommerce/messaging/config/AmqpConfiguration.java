@@ -23,7 +23,6 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("com.super4tech.ecommerce.messaging")
 public class AmqpConfiguration {
 
-/*    <rabbit:connection-factory id="connectionFactory" host="localhost" username="joe" password="joe"/>*/  
 	    @Bean
 	    public ConnectionFactory connectionFactory() {
 	    	CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");

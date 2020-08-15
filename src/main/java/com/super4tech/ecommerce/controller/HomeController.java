@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/gethomepage")
 public class HomeController {
 
+	// for testing security
 //	@RequestMapping
 	public String welcome(Model model) {
 		model.addAttribute("firstName", "User");

@@ -51,7 +51,6 @@ public class CommentController {
         review.setBuyer(buyer);
         reviewList.add(review);
         review.getProduct().setReviewsProduct(reviewList);
-        System.out.println("#################");
         reviewService.save(review);
         reviewList=reviewService.findAllByProductAndReviewStatus(productResult, ReviewStatus.approved);
         model.addAttribute(review);

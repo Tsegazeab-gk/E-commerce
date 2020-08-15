@@ -24,7 +24,7 @@ public class Review {
 	@JoinColumn(name="product_id")
 	 private Product product ;
 
-	@NotBlank(message = "comment can't empty!")
+	@NotBlank(message = "comment can not be empty!")
 	private String comment ;
 
 

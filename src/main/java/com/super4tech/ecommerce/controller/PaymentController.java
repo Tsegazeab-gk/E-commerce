@@ -29,7 +29,6 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final OrderService orderService;
     private final CartItemService cartItemService;
-
     private final BuyerService buyerService;
 
     private ItemService itemService;
@@ -45,7 +44,6 @@ public class PaymentController {
         this.orderService = orderService;
         this.cartItemService = cartItemService;
         this.buyerService = buyerService;
-      //  this.couponPaymentService = couponPaymentService;
         this.itemService=itemService;
     }
 
@@ -91,15 +89,7 @@ public class PaymentController {
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setPayment(paymentResult);
-/*
-        //  Update Buyer Coupons
-        Buyer buyer = buyerService.findOne(cartItem.getBuyer().getId());
-        buyer.setCoupons(buyer.getCoupons() + 1);
-        User user = buyer.getUser();
-        user.setMatchingPassword(user.getPassword());
-        buyer.setUser(user);
-        buyerService.update(buyer);
-*/
+
         order.setCartItem(cartItem);
         updateItemStatus(cartItem);
 
@@ -123,73 +113,7 @@ public class PaymentController {
         model.addAttribute("order", order);
         return "payment/paymentsuccess";
     }
-/*
-    @GetMapping("/coupon/{id}")
-    public String couponPayment(@PathVariable("id") Long id, Model model) {
-        ShoppingCart cartItem = cartItemService.findById(id);
-        CouponPayment payment = new CouponPayment();
 
-        List<CouponPayment> couponPaymentHistorys = couponPaymentService.getAllByUserName(CurrentUser.loggedInUserName());
-        Optional<CouponPayment> couponPaymentHistory = couponPaymentHistorys.stream().findFirst();
-        if (couponPaymentHistory.isPresent())
-            payment = couponPaymentHistory.get();
-        else {
-            List<Payment> paymentHistorys = paymentService.getAllByUserName(CurrentUser.loggedInUserName());
-            Optional<Payment> paymentHistory = paymentHistorys.stream().findFirst();
-            if (paymentHistory.isPresent())
-                payment.setShippingAddress(paymentHistory.get().getShippingAddress());
-            else
-                payment.setShippingAddress(new ShippingAddress());
-
-        }
-        payment.setCartItem(cartItem);
-        payment.setTotalPrice(1d);
-
-        model.addAttribute("payment", payment);
-
-        return "payment/couponpayment";
-    }
-
-    @PostMapping("/coupon")
-    public String couponPayment(@Valid CouponPayment couponPayment, BindingResult result, Model model) {
-        Long id = couponPayment.getCartItem().getCartId();
-        CartItem cartItem = cartItemService.findById(id);
-        couponPayment.setTotalPrice(cartItem.getTotalPrice());
-
-        if (result.hasErrors()) {
-            couponPayment.setCartItem(cartItem);
-            model.addAttribute("payment", couponPayment);
-            return "payment/couponpayment";
-        }
-
-        CouponPayment paymentResult = couponPaymentService.addPayment(couponPayment);
-        Order order = new Order();
-        order.setOrderDate(LocalDateTime.now());
-        order.setCouponPayment(paymentResult);
-
-        //  Update Buyer Coupons
-        Buyer buyer = buyerService.find(cartItem.getBuyer().getId());
-        if (buyer.getCoupons() < 1)
-            throw new NoCouponAvailable("No enough coupon!");
-
-        buyer.setCoupons(buyer.getCoupons() - 1);
-        User user = buyer.getUser();
-        user.setMatchingPassword(user.getPassword());
-        buyer.setUser(user);
-        buyerService.put(buyer);
-
-        order.setCartItem(cartItem);
-        orderService.addOrder(order);
-        updateItemStatus(cartItem);
-        return "redirect:/payment/couponsuccess/" + order.getId();
-    }
-*/
-    @GetMapping("/couponsuccess/{id}")
-    public String couponPaymentSuccess(@PathVariable("id") Long id, Model model) {
-        Order order = orderService.getOrder(id);
-        model.addAttribute("order", order);
-        return "payment/couponpaymentsuccess";
-    }
 
 
     @ModelAttribute("months")

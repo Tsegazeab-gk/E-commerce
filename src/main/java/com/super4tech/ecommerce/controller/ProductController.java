@@ -138,18 +138,6 @@ public class ProductController {
         return "redirect:/seller/productsList";
 
     }
-/**
-    @RequestMapping("/products/{category}")
-    public String getProductsByCategory(Model model, @PathVariable("category") Long productCategory) {
-        model.addAttribute("products", productService.find(productCategory));
-        return "products";
-    }
 
-    @RequestMapping("/product")
-    public String getProductById(@RequestParam("id") Long productId, Model model) {
-        model.addAttribute("product", productService.find(productId));
-        return "product";
-    }
-**/
 }
 

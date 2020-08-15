@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.super4tech.ecommerce.enums.OrderStatus;
 import com.super4tech.ecommerce.helper.Constants;
-import com.super4tech.ecommerce.messaging.OrderRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,23 +22,15 @@ import java.util.Set;
 @Getter
 @ToString
 @Entity(name = "Orders")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = OrderRequest.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = OrderRequest.class)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //    @Transient
-//    @OneToOne
-//    private Buyer buyer;
-    //@OneToOne
-    //private Seller seller;
     @JoinColumn
     @OneToOne(cascade = CascadeType.MERGE)
     private CartItem cartItem;
-    // @Transient
-    // private Product product;
-    //private Integer quantity;
 
     @DateTimeFormat(pattern = Constants.DATE_FORMATTER)
     private LocalDateTime orderDate;
@@ -57,12 +48,6 @@ public class Order {
 
     @OneToMany(mappedBy = "orderHistory")
     private Set<Order> subordinates = new HashSet<Order>();
-
-
-//    @OneToOne
-//    private ShippingAddress shippingAddress;
-//    private ShippingStatus shippingStatus;
-//
 
     private OrderStatus orderStatus = OrderStatus.ORDERED;
 

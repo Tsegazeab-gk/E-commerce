@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//
+// Sending Order Message to RabbitMQ in Json format
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope =OrderMessage.class)
 public class OrderMessage   {
 

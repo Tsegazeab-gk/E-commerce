@@ -41,7 +41,7 @@ public class OrderController {
     }
 
     @GetMapping("/seller")
-//    @PreAuthorize(value = "hasRole(SELLER) and hasRole(BUYER)")
+
     public String indexSeller(Model model) {
         List<Order> orders = orderService.getAllBySeller(CurrentUser.loggedInUserName());
         model.addAttribute("orders", orders);
@@ -49,7 +49,6 @@ public class OrderController {
     }
 
     @GetMapping("/buyer")
-//    @PreAuthorize(value = "hasRole(SELLER) and hasRole(BUYER)")
     public String indexBuyer(Model model) {
         List<Order> orders = orderService.getAllByBuyer(CurrentUser.loggedInUserName());
         model.addAttribute("orders", orders);
@@ -57,7 +56,6 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-//    @PreAuthorize(value = "hasRole(SELLER) and hasRole(BUYER)")
     public ModelAndView details(@PathVariable("id") Long id) {
         Order order = orderService.getOrder(id);
         ModelAndView mv = new ModelAndView("order/details");
@@ -66,7 +64,6 @@ public class OrderController {
     }
 
     @GetMapping("/delete/{id}")
-//    @PreAuthorize(value = "hasRole(SELLER) and hasRole(BUYER)")
     public ModelAndView delete(@PathVariable("id") Long id) {
         Order order = orderService.getOrder(id);
         ModelAndView modelAndView = new ModelAndView("order/delete");
@@ -75,7 +72,6 @@ public class OrderController {
     }
 
     @PostMapping("/delete")
-//    @PreAuthorize(value = "hasRole(SELLER) and hasRole(BUYER)")
     public String delete(Order order) {
         orderService.deleteOrder(order.getId());
         return "redirect:/order";
